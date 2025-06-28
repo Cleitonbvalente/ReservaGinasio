@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.reservaginasiooficial.reservaginasiooficial.MinhasReservasController"
+      spacing="10"
+      style="-fx-background-color: #f5f5f5;"
+      prefWidth="800">
+
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <!-- Cabeçalho -->
+    <Label text="Minhas Reservas"
+           style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+
+    <!-- Barra de filtros -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Filtrar por:"/>
+        <DatePicker fx:id="dpFiltroData" promptText="Selecione uma data"/>
+        <ComboBox fx:id="cbFiltroEsporte" promptText="Todos os esportes"/>
+        <Button text="Aplicar Filtros" onAction="#onFiltrarClicked"/>
+        <Button text="Limpar Filtros" onAction="#onLimparFiltrosClicked"
+                style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
+    </HBox>
+
+    <!-- Tabela de reservas -->
+    <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colEsporte" text="Esporte" prefWidth="150"/>
+            <TableColumn fx:id="colData" text="Data" prefWidth="120"/>
+            <TableColumn fx:id="colHorario" text="Horário" prefWidth="120"/>
+            <TableColumn fx:id="colAcoes" text="Ações" prefWidth="150"/>
+        </columns>
+    </TableView>
+
+    <!-- Rodapé -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Voltar" onAction="#onVoltarClicked"/>
+        <Button text="Nova Reserva" onAction="#onNovaReservaClicked"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+    </HBox>
+</VBox>
