@@ -3,33 +3,29 @@ package com.reservaginasiooficial.reservaginasiooficial;
 import com.reservaginasiooficial.reservaginasiooficial.model.dao.DaoFactory;
 import com.reservaginasiooficial.reservaginasiooficial.model.dao.ReservaDAO;
 import com.reservaginasiooficial.reservaginasiooficial.model.entities.Reserva;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.time.LocalDate;
 
 public class VisualizarReservasController {
-
-    // Componentes da tabela
     @FXML private TableView<Reserva> tableView;
     @FXML private TableColumn<Reserva, String> colResponsavel;
     @FXML private TableColumn<Reserva, String> colEsporte;
     @FXML private TableColumn<Reserva, LocalDate> colData;
     @FXML private TableColumn<Reserva, String> colHorario;
-
-    // Componentes de filtro
     @FXML private DatePicker datePicker;
     @FXML private TextField tfNome;
     @FXML private TextField tfEsporte;
 
     private final ReservaDAO reservaDAO = DaoFactory.createReservaDAO();
-    private final ObservableList<Reserva> reservas = FXCollections.observableArrayList();
+    private final ObservableList<Reserva> todasReservas = FXCollections.observableArrayList();
+    private final ObservableList<Reserva> reservasFiltradas = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
@@ -38,36 +34,87 @@ public class VisualizarReservasController {
     }
 
     private void configurarColunas() {
-        // Configuração das colunas
-        colResponsavel.setCellValueFactory(new PropertyValueFactory<>("nomeUsuario"));
-        colEsporte.setCellValueFactory(new PropertyValueFactory<>("esporte"));
-        colData.setCellValueFactory(new PropertyValueFactory<>("data"));
-        colHorario.setCellValueFactory(new PropertyValueFactory<>("horario"));
+        // Configuração usando SimpleProperty diretamente
+        colResponsavel.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getNomeUsuario()));
+
+        colEsporte.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getEsporte()));
+
+        colData.setCellValueFactory(cellData ->
+                new SimpleObjectProperty<>(cellData.getValue().getData()));
+
+        colHorario.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getHorario()));
+
+        // Estilo para garantir visibilidade
+        String estiloColuna = "-fx-alignment: CENTER-LEFT; -fx-text-fill: black; -fx-font-size: 14px;";
+        colResponsavel.setStyle(estiloColuna);
+        colEsporte.setStyle(estiloColuna);
+        colData.setStyle(estiloColuna);
+        colHorario.setStyle(estiloColuna);
+
+        // Larguras preferenciais
+        colResponsavel.setPrefWidth(200);
+        colEsporte.setPrefWidth(150);
+        colData.setPrefWidth(120);
+        colHorario.setPrefWidth(100);
     }
 
     private void carregarDados() {
-        reservas.setAll(reservaDAO.buscarTodos());
-        tableView.setItems(reservas);
+        todasReservas.setAll(reservaDAO.buscarTodos());
+        reservasFiltradas.setAll(todasReservas);
+        tableView.setItems(reservasFiltradas);
+
+        // DEBUG: Verificar dados carregados
+        System.out.println("Total de reservas carregadas: " + todasReservas.size());
+        todasReservas.forEach(r -> System.out.println(
+                r.getNomeUsuario() + " | " + r.getEsporte() + " | " +
+                        r.getData() + " | " + r.getHorario()));
     }
 
     @FXML
     public void onFiltrarClicked() {
         LocalDate data = datePicker.getValue();
-        String nome = tfNome.getText().trim();
-        String esporte = tfEsporte.getText().trim();
+        String nome = tfNome.getText().trim().toLowerCase();
+        String esporte = tfEsporte.getText().trim().toLowerCase();
 
-        if (data != null) {
-            reservas.setAll(reservaDAO.buscarPorData(data));
-        } else {
-            reservas.setAll(reservaDAO.buscarTodos());
+        reservasFiltradas.clear();
+
+        for (Reserva reserva : todasReservas) {
+            boolean atendeFiltros = true;
+
+            if (data != null && !reserva.getData().equals(data)) {
+                atendeFiltros = false;
+            }
+
+            if (!nome.isEmpty() && !reserva.getNomeUsuario().toLowerCase().contains(nome)) {
+                atendeFiltros = false;
+            }
+
+            if (!esporte.isEmpty() && !reserva.getEsporte().toLowerCase().contains(esporte)) {
+                atendeFiltros = false;
+            }
+
+            if (atendeFiltros) {
+                reservasFiltradas.add(reserva);
+            }
         }
 
-        // Aplicar filtros adicionais
-        if (!nome.isEmpty()) {
-            reservas.removeIf(r -> !r.getNomeUsuario().toLowerCase().contains(nome.toLowerCase()));
-        }
-        if (!esporte.isEmpty()) {
-            reservas.removeIf(r -> !r.getEsporte().equalsIgnoreCase(esporte));
-        }
+        tableView.refresh();
+    }
+
+    @FXML
+    public void onLimparFiltrosClicked() {
+        datePicker.setValue(null);
+        tfNome.clear();
+        tfEsporte.clear();
+        reservasFiltradas.setAll(todasReservas);
+        tableView.refresh();
+    }
+
+    @FXML
+    public void onFecharClicked() {
+        ((Stage) tableView.getScene().getWindow()).close();
     }
 }

@@ -10,26 +10,22 @@
       fx:controller="com.reservaginasiooficial.reservaginasiooficial.LoginController"
       spacing="10"
       alignment="CENTER"
-      style="-fx-background-color: #f5f5f5;"
       prefWidth="400">
 
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <!-- Cabeçalho -->
     <Label text="Área do Usuário"
            style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
 
-    <!-- Abas -->
     <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab text="Login">
                 <VBox spacing="10">
                     <TextField fx:id="txtEmailLogin" promptText="E-mail"/>
                     <PasswordField fx:id="txtSenhaLogin" promptText="Senha"/>
-                    <Button text="Entrar" onAction="#onLoginClicked"
-                            style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+                    <Button text="Entrar" onAction="#onLoginClicked"/>
                 </VBox>
             </Tab>
 
@@ -39,14 +35,12 @@
                     <TextField fx:id="txtEmailCadastro" promptText="E-mail"/>
                     <PasswordField fx:id="txtSenhaCadastro" promptText="Senha"/>
                     <PasswordField fx:id="txtConfirmarSenha" promptText="Confirmar Senha"/>
-                    <Button text="Cadastrar" onAction="#onCadastrarClicked"
-                            style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+                    <Button text="Cadastrar" onAction="#onCadastrarClicked"/>
                 </VBox>
             </Tab>
         </tabs>
     </TabPane>
 
-    <!-- Rodapé -->
     <Label text="© 2023 Ginásio Esportivo"
            style="-fx-font-size: 12px; -fx-text-fill: #666;"/>
 </VBox>

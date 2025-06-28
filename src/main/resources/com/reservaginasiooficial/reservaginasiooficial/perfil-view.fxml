@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.reservaginasiooficial.reservaginasiooficial.PerfilController"
+      spacing="15"
+      alignment="TOP_CENTER"
+      style="-fx-background-color: #f5f5f5;"
+      prefWidth="400">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Meu Perfil"
+           style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+
+    <GridPane hgap="10" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="30"/>
+            <ColumnConstraints percentWidth="70"/>
+        </columnConstraints>
+
+        <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <Label fx:id="lblNome" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="E-mail:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <Label fx:id="lblEmail" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <HBox spacing="15" alignment="CENTER">
+        <Button text="Sair" onAction="#onSairClicked"
+                style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
+
+        <Button text="Fechar" onAction="#onFecharClicked"/>
+    </HBox>
+</VBox>

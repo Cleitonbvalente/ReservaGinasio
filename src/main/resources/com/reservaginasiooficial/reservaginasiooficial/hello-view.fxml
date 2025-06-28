@@ -4,33 +4,36 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.reservaginasiooficial.reservaginasiooficial.HelloController"
-      alignment="CENTER" spacing="20" style="-fx-padding: 20; -fx-background-color: #f5f5f5;">
+      alignment="CENTER" spacing="20" style="-fx-padding: 20;">
 
-    <Label text="Sistema de Reservas de Ginásio" style="-fx-font-size: 24px; -fx-font-weight: bold;">
-        <font>
-            <Font name="System Bold" size="24.0" />
-        </font>
-    </Label>
+    <Label text="Sistema de Reservas de Ginásio" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
 
-
-    <VBox alignment="CENTER" spacing="10">
-        <Button text="Visualizar Reservas" onAction="#onVisualizarReservasClicked" onMouseClicked="#onVisualizarReservasClicked"
+    <VBox fx:id="vbOpcoesUsuario" alignment="CENTER" spacing="10">
+        <Button fx:id="btnVisualizarReservas" text="Visualizar Reservas"
+                onAction="#onVisualizarReservasClicked"
                 style="-fx-font-size: 14px; -fx-min-width: 200px; -fx-min-height: 40px;"/>
 
-        <Button text="Fazer Nova Reserva" onAction="#onNovaReservaClicked"
+        <Button fx:id="btnNovaReserva" text="Fazer Nova Reserva"
+                onAction="#onNovaReservaClicked"
                 style="-fx-font-size: 14px; -fx-min-width: 200px; -fx-min-height: 40px;"/>
 
-        <Button text="Minhas Reservas" onAction="#onMinhasReservasClicked"
+        <Button fx:id="btnMinhasReservas" text="Minhas Reservas"
+                onAction="#onMinhasReservasClicked"
                 style="-fx-font-size: 14px; -fx-min-width: 200px; -fx-min-height: 40px;"/>
 
-        <Button text="Área do Usuário" onAction="#onLoginClicked"
+        <Button fx:id="btnAreaUsuario" text="Área do Usuário"
+                onAction="#onLoginClicked"
                 style="-fx-font-size: 14px; -fx-min-width: 200px; -fx-min-height: 40px;"/>
+
+        <Button fx:id="btnPerfil" text="Meu Perfil"
+                onAction="#onPerfilClicked"
+                style="-fx-font-size: 14px; -fx-min-width: 200px; -fx-min-height: 40px; -fx-background-color: #4CAF50; -fx-text-fill: white;"/>
     </VBox>
 
-    <Label text="© 2023 Ginásio Esportivo" style="-fx-font-size: 12px; -fx-text-fill: #666;"/>
+    <Label fx:id="lblMensagemLogin" text=""
+           style="-fx-font-size: 12px; -fx-text-fill: #666; -fx-alignment: CENTER;"/>
 
+    <Label text="© 2023 Ginásio Esportivo" style="-fx-font-size: 12px; -fx-text-fill: #666;"/>
 </VBox>

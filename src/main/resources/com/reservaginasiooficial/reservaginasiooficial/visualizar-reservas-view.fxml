@@ -9,31 +9,46 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.reservaginasiooficial.reservaginasiooficial.VisualizarReservasController"
       spacing="10"
-      style="-fx-background-color: #f5f5f5;">
+      style="-fx-background-color: #f5f5f5;"
+      prefWidth="800">
 
-    <!-- Padding correto usando a tag <padding> -->
     <padding>
         <Insets top="10" right="10" bottom="10" left="10"/>
     </padding>
 
-    <!-- Cabeçalho -->
-    <Label text="Visualização de Horários Reservados"
+    <Label text="Visualização de Reservas"
            style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
 
-    <!-- Barra de filtros -->
-    <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 5;">
-        <Label text="Filtrar por:"/>
-        <DatePicker fx:id="datePicker" promptText="Selecione uma data"/>
-        <TextField fx:id="tfNome" promptText="Nome do responsável" style="-fx-pref-width: 200;"/>
-        <TextField fx:id="tfEsporte" promptText="Tipo de esporte" style="-fx-pref-width: 150;"/>
+    <!-- Barra de Filtros -->
+    <GridPane hgap="10" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="20"/>
+            <ColumnConstraints percentWidth="30"/>
+            <ColumnConstraints percentWidth="20"/>
+            <ColumnConstraints percentWidth="30"/>
+        </columnConstraints>
+
+        <Label text="Filtrar por Data:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="datePicker" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Filtrar por Nome:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+        <TextField fx:id="tfNome" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+        <Label text="Filtrar por Esporte:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="tfEsporte" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <!-- Botões de Ação -->
+    <HBox spacing="10" alignment="CENTER">
         <Button text="Aplicar Filtros" onAction="#onFiltrarClicked"
                 style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+        <Button text="Limpar Filtros" onAction="#onLimparFiltrosClicked"
+                style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
     </HBox>
 
-    <!-- Tabela de horários -->
-    <TableView fx:id="tableView" style="-fx-background-color: white;">
+    <!-- Tabela de Reservas -->
+    <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
         <columns>
-            <!-- Certifique-se que os fx:id batem com o controller -->
             <TableColumn fx:id="colResponsavel" text="Responsável" prefWidth="200"/>
             <TableColumn fx:id="colEsporte" text="Esporte" prefWidth="150"/>
             <TableColumn fx:id="colData" text="Data" prefWidth="120"/>
@@ -41,7 +56,8 @@
         </columns>
     </TableView>
 
-    <!-- Rodapé -->
-    <Label text="* Horários disponíveis: 07:00-09:00, 09:00-11:00, ..., 20:00-22:00"
-           style="-fx-font-size: 12px; -fx-text-fill: #666;"/>
+    <!-- Botão Fechar -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Fechar" onAction="#onFecharClicked"/>
+    </HBox>
 </VBox>

@@ -1,90 +1,99 @@
 package com.reservaginasiooficial.reservaginasiooficial;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 
 public class HelloController {
-    private static boolean usuarioLogado = false;
-    private static String telaRedirecionamento = null;
+    private static HelloController instancia;
 
-    @FXML
-    public void onVisualizarReservasClicked() {
-        try {
-            HelloApplication.criarTela("visualizar-reservas-view.fxml");
-        } catch (IOException e) {
-            mostrarErro("Erro ao visualizar reservas", e);
-        }
+    @FXML private VBox vbOpcoesUsuario;
+    @FXML private Label lblMensagemLogin;
+    @FXML private Button btnVisualizarReservas;
+    @FXML private Button btnNovaReserva;
+    @FXML private Button btnMinhasReservas;
+    @FXML private Button btnAreaUsuario;
+    @FXML private Button btnPerfil;
+
+    public static HelloController getInstancia() {
+        return instancia;
     }
 
     @FXML
-    public void onLoginClicked() {
-        try {
-            HelloApplication.criarTela("login-view.fxml");
-        } catch (IOException e) {
-            mostrarErro("Erro ao abrir login", e);
+    public void initialize() {
+        instancia = this;
+        btnPerfil.setVisible(false);
+        atualizarInterfaceUsuario();
+    }
+
+    public void atualizarInterfaceUsuario() {
+        boolean logado = SessaoUsuario.isLogado();
+
+        btnVisualizarReservas.setVisible(true);
+        btnNovaReserva.setVisible(logado);
+        btnMinhasReservas.setVisible(logado);
+        btnAreaUsuario.setVisible(!logado);
+        btnPerfil.setVisible(logado);
+
+        lblMensagemLogin.setVisible(!logado);
+        lblMensagemLogin.setText("Para Fazer Reserva ou Gerenciar suas reservas,\nfaça login ou cadastre-se");
+    }
+
+    @FXML
+    public void onVisualizarReservasClicked() {
+        abrirTela("visualizar-reservas-view.fxml", "Visualizar Reservas");
+    }
+
+    @FXML
+    public void onNovaReservaClicked() {
+        if (SessaoUsuario.isLogado()) {
+            abrirTela("nova-reserva-view.fxml", "Nova Reserva");
+        } else {
+            abrirTela("login-view.fxml", "Área do Usuário");
         }
     }
 
     @FXML
     public void onMinhasReservasClicked() {
-        if (usuarioLogado) {
-            try {
-                HelloApplication.criarTela("minhas-reservas-view.fxml");
-            } catch (IOException e) {
-                mostrarErro("Erro ao abrir reservas", e);
-            }
+        if (SessaoUsuario.isLogado()) {
+            abrirTela("minhas-reservas-view.fxml", "Minhas Reservas");
         } else {
-            redirecionarParaLogin("minhas-reservas-view.fxml");
+            abrirTela("login-view.fxml", "Área do Usuário");
         }
     }
 
     @FXML
-    public void onNovaReservaClicked() {
-        if (usuarioLogado) {
-            abrirNovaReserva();
-        } else {
-            redirecionarParaLogin("nova-reserva-view.fxml");
-        }
+    public void onLoginClicked() {
+        abrirTela("login-view.fxml", "Área do Usuário");
     }
 
-    private void abrirNovaReserva() {
+    @FXML
+    public void onPerfilClicked() {
+        abrirTela("perfil-view.fxml", "Meu Perfil");
+    }
+
+    private void abrirTela(String fxml, String titulo) {
         try {
-            HelloApplication.criarTela("nova-reserva-view.fxml");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle(titulo);
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+            atualizarInterfaceUsuario();
         } catch (IOException e) {
-            mostrarErro("Erro ao criar reserva", e);
+            e.printStackTrace();
         }
-    }
-
-    private void redirecionarParaLogin(String telaDestino) {
-        telaRedirecionamento = telaDestino;
-        try {
-            HelloApplication.criarTela("login-view.fxml");
-        } catch (IOException e) {
-            mostrarErro("Erro ao abrir login", e);
-        }
-    }
-
-    public static void setUsuarioLogado(boolean status) {
-        usuarioLogado = status;
-        if (usuarioLogado && telaRedirecionamento != null) {
-            try {
-                HelloApplication.criarTela(telaRedirecionamento);
-                telaRedirecionamento = null;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void mostrarErro(String titulo, Exception e) {
-        System.err.println(titulo + ": " + e.getMessage());
-        e.printStackTrace();
-
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(titulo);
-        alert.setHeaderText("Erro no sistema");
-        alert.setContentText(e.getMessage());
-        alert.showAndWait();
     }
 }

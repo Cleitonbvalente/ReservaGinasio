@@ -3,9 +3,12 @@ package com.reservaginasiooficial.reservaginasiooficial;
 import com.reservaginasiooficial.reservaginasiooficial.model.dao.DaoFactory;
 import com.reservaginasiooficial.reservaginasiooficial.model.dao.ReservaDAO;
 import com.reservaginasiooficial.reservaginasiooficial.model.entities.Reserva;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.stage.Stage;
+
 import java.time.LocalDate;
 
 public class NovaReservaController {
@@ -22,19 +25,14 @@ public class NovaReservaController {
     }
 
     private void configurarComboboxes() {
-        cbEsporte.setItems(FXCollections.observableArrayList(
-                "Futsal", "Vôlei", "Basquete", "Handebol", "Badminton"
-        ));
-
-        cbHorario.setItems(FXCollections.observableArrayList(
-                "07:00-09:00", "09:00-11:00", "11:00-13:00",
+        cbEsporte.getItems().addAll("Futsal", "Vôlei", "Basquete", "Handebol", "Badminton");
+        cbHorario.getItems().addAll("07:00-09:00", "09:00-11:00", "11:00-13:00",
                 "13:00-15:00", "15:00-17:00", "17:00-19:00",
-                "19:00-21:00", "21:00-23:00"
-        ));
+                "19:00-21:00", "21:00-23:00");
     }
 
     private void configurarDatePicker() {
-        dpData.setDayCellFactory(picker -> new DateCell() {
+        dpData.setDayCellFactory(picker -> new javafx.scene.control.DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 setDisable(empty || date.isBefore(LocalDate.now()));
@@ -45,7 +43,20 @@ public class NovaReservaController {
     @FXML
     public void onReservarClicked() {
         if (validarCampos()) {
-            fazerReserva();
+            Reserva reserva = new Reserva(
+                    SessaoUsuario.getUsuarioId(),
+                    cbEsporte.getValue(),
+                    dpData.getValue(),
+                    cbHorario.getValue()
+            );
+
+            try {
+                reservaDAO.inserir(reserva);
+                mostrarAlerta("Sucesso", "Reserva realizada com sucesso!");
+                fecharJanela();
+            } catch (Exception e) {
+                mostrarAlerta("Erro", "Horário já reservado!");
+            }
         }
     }
 
@@ -54,31 +65,16 @@ public class NovaReservaController {
         fecharJanela();
     }
 
-    private void fazerReserva() {
-        Reserva reserva = new Reserva(
-                // ID do usuário logado (substitua pelo valor real)
-                1,
-                cbEsporte.getValue(),
-                dpData.getValue(),
-                cbHorario.getValue()
-        );
-
-        try {
-            reservaDAO.inserir(reserva);
-            mostrarAlerta("Sucesso", "Reserva realizada com sucesso!");
-            fecharJanela();
-        } catch (Exception e) {
-            mostrarAlerta("Erro", "Horário já reservado!");
-        }
-    }
-
     private boolean validarCampos() {
-        // Implemente validações dos campos
+        if (cbEsporte.getValue() == null || dpData.getValue() == null || cbHorario.getValue() == null) {
+            mostrarAlerta("Erro", "Preencha todos os campos!");
+            return false;
+        }
         return true;
     }
 
     private void fecharJanela() {
-        cbEsporte.getScene().getWindow().hide();
+        ((Stage) cbEsporte.getScene().getWindow()).close();
     }
 
     private void mostrarAlerta(String titulo, String mensagem) {

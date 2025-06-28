@@ -1,6 +1,6 @@
 package com.reservaginasiooficial.reservaginasiooficial.model.entities;
-import java.time.LocalDate;
 
+import java.time.LocalDate;
 
 public class Reserva {
     private Integer id;
@@ -8,7 +8,7 @@ public class Reserva {
     private String nomeUsuario;
     private String esporte;
     private LocalDate data;
-    private String horario; // Formato "07:00-09:00"
+    private String horario;
 
     public Reserva() {
     }
@@ -67,5 +67,17 @@ public class Reserva {
 
     public void setHorario(String horario) {
         this.horario = horario;
+    }
+
+    @Override
+    public String toString() {
+        return "Reserva{" +
+                "id=" + id +
+                ", idUsuario=" + idUsuario +
+                ", nomeUsuario='" + nomeUsuario + '\'' +
+                ", esporte='" + esporte + '\'' +
+                ", data=" + data +
+                ", horario='" + horario + '\'' +
+                '}';
     }
 }
