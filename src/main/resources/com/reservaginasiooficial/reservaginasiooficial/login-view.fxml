@@ -35,6 +35,13 @@
                     <TextField fx:id="txtEmailCadastro" promptText="E-mail"/>
                     <PasswordField fx:id="txtSenhaCadastro" promptText="Senha"/>
                     <PasswordField fx:id="txtConfirmarSenha" promptText="Confirmar Senha"/>
+
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Button fx:id="btnSelecionarFoto" text="Selecionar Foto"
+                                onAction="#onSelecionarFotoClicked"/>
+                        <Label fx:id="lblNomeArquivo" style="-fx-font-style: italic;"/>
+                    </HBox>
+
                     <Button text="Cadastrar" onAction="#onCadastrarClicked"/>
                 </VBox>
             </Tab>

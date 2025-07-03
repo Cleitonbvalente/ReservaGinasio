@@ -10,6 +10,7 @@ import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class NovaReservaController {
     @FXML private ComboBox<String> cbEsporte;
@@ -20,24 +21,40 @@ public class NovaReservaController {
 
     @FXML
     public void initialize() {
-        configurarComboboxes();
-        configurarDatePicker();
-    }
-
-    private void configurarComboboxes() {
+        // Preenche o ComboBox de esportes
         cbEsporte.getItems().addAll("Futsal", "Vôlei", "Basquete", "Handebol", "Badminton");
-        cbHorario.getItems().addAll("07:00-09:00", "09:00-11:00", "11:00-13:00",
-                "13:00-15:00", "15:00-17:00", "17:00-19:00",
-                "19:00-21:00", "21:00-23:00");
-    }
 
-    private void configurarDatePicker() {
+        // Configura o DatePicker para aceitar apenas datas futuras
         dpData.setDayCellFactory(picker -> new javafx.scene.control.DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 setDisable(empty || date.isBefore(LocalDate.now()));
             }
         });
+
+        // Preenche os horários disponíveis
+        cbHorario.getItems().addAll(
+                "07:00-09:00", "09:00-11:00", "11:00-13:00",
+                "13:00-15:00", "15:00-17:00", "17:00-19:00",
+                "19:00-21:00", "21:00-23:00"
+        );
+
+        // Atualiza horários quando a data muda
+        dpData.valueProperty().addListener((obs, oldDate, newDate) -> {
+            if (newDate != null) {
+                atualizarHorariosDisponiveis(newDate);
+            }
+        });
+    }
+
+    private void atualizarHorariosDisponiveis(LocalDate data) {
+        try {
+            List<String> horariosDisponiveis = reservaDAO.getHorariosDisponiveis(data);
+            cbHorario.getItems().clear();
+            cbHorario.getItems().addAll(horariosDisponiveis);
+        } catch (Exception e) {
+            mostrarAlerta("Erro", "Não foi possível carregar os horários disponíveis");
+        }
     }
 
     @FXML
@@ -55,7 +72,7 @@ public class NovaReservaController {
                 mostrarAlerta("Sucesso", "Reserva realizada com sucesso!");
                 fecharJanela();
             } catch (Exception e) {
-                mostrarAlerta("Erro", "Horário já reservado!");
+                mostrarAlerta("Erro", "Falha ao realizar reserva: " + e.getMessage());
             }
         }
     }
@@ -66,8 +83,16 @@ public class NovaReservaController {
     }
 
     private boolean validarCampos() {
-        if (cbEsporte.getValue() == null || dpData.getValue() == null || cbHorario.getValue() == null) {
-            mostrarAlerta("Erro", "Preencha todos os campos!");
+        if (cbEsporte.getValue() == null) {
+            mostrarAlerta("Atenção", "Selecione um esporte");
+            return false;
+        }
+        if (dpData.getValue() == null) {
+            mostrarAlerta("Atenção", "Selecione uma data");
+            return false;
+        }
+        if (cbHorario.getValue() == null) {
+            mostrarAlerta("Atenção", "Selecione um horário");
             return false;
         }
         return true;

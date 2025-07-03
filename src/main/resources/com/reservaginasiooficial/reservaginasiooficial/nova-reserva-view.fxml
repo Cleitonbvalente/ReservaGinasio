@@ -35,11 +35,10 @@
         <ComboBox fx:id="cbHorario" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
     </GridPane>
 
-    <Label text="Horários Disponíveis: 07:00-09:00 | 09:00-11:00 | ... | 20:00-22:00"
-           style="-fx-font-size: 12px; -fx-text-fill: #666; -fx-font-style: italic;"/>
-
     <HBox spacing="15" alignment="CENTER">
-        <Button text="Reservar" onAction="#onReservarClicked"/>
-        <Button text="Cancelar" onAction="#onCancelarClicked"/>
+        <Button text="Reservar" onAction="#onReservarClicked"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-min-width: 100px;"/>
+        <Button text="Cancelar" onAction="#onCancelarClicked"
+                style="-fx-min-width: 100px;"/>
     </HBox>
 </VBox>

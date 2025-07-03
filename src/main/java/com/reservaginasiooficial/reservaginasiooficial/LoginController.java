@@ -4,11 +4,13 @@ import com.reservaginasiooficial.reservaginasiooficial.model.dao.DaoFactory;
 import com.reservaginasiooficial.reservaginasiooficial.model.dao.UsuarioDAO;
 import com.reservaginasiooficial.reservaginasiooficial.model.entities.Usuario;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 public class LoginController {
     @FXML private TextField txtEmailLogin;
@@ -18,8 +20,31 @@ public class LoginController {
     @FXML private PasswordField txtSenhaCadastro;
     @FXML private PasswordField txtConfirmarSenha;
     @FXML private TabPane tabPane;
+    @FXML private Button btnSelecionarFoto;
+    @FXML private Label lblNomeArquivo;
 
+    private File arquivoFoto;
     private final UsuarioDAO usuarioDAO = DaoFactory.createUsuarioDAO();
+
+    @FXML
+    public void initialize() {
+        lblNomeArquivo.setVisible(false);
+    }
+
+    @FXML
+    public void onSelecionarFotoClicked() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Selecionar Foto");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Imagens", "*.png", "*.jpg", "*.jpeg")
+        );
+        arquivoFoto = fileChooser.showOpenDialog(btnSelecionarFoto.getScene().getWindow());
+
+        if (arquivoFoto != null) {
+            lblNomeArquivo.setText(arquivoFoto.getName());
+            lblNomeArquivo.setVisible(true);
+        }
+    }
 
     @FXML
     public void onLoginClicked() {
@@ -56,10 +81,28 @@ public class LoginController {
         if (validarCamposCadastro(nome, email, senha, confirmacao)) {
             try {
                 Usuario novoUsuario = new Usuario(nome, email, senha);
+
+                // Adiciona foto se foi selecionada
+                if (arquivoFoto != null) {
+                    byte[] fotoBytes = Files.readAllBytes(arquivoFoto.toPath());
+                    novoUsuario.setFoto(fotoBytes);
+                }
+
                 usuarioDAO.inserir(novoUsuario);
-                mostrarAlerta("Sucesso", "Cadastro realizado com sucesso!");
-                limparCamposCadastro();
-                tabPane.getSelectionModel().select(0);
+
+                // Autentica automaticamente
+                Usuario usuario = usuarioDAO.autenticar(email, senha);
+                SessaoUsuario.login(usuario);
+
+                // Fecha a tela de login/cadastro
+                fecharJanela();
+
+                // Atualiza a tela principal
+                HelloController controller = HelloController.getInstancia();
+                if (controller != null) {
+                    controller.atualizarInterfaceUsuario();
+                }
+
             } catch (Exception e) {
                 mostrarAlerta("Erro", "Falha no cadastro: " + e.getMessage());
             }
@@ -85,13 +128,6 @@ public class LoginController {
             return false;
         }
         return true;
-    }
-
-    private void limparCamposCadastro() {
-        txtNomeCadastro.clear();
-        txtEmailCadastro.clear();
-        txtSenhaCadastro.clear();
-        txtConfirmarSenha.clear();
     }
 
     private void fecharJanela() {

@@ -10,7 +10,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class MinhasReservasController {
@@ -24,7 +29,7 @@ public class MinhasReservasController {
 
     private final ReservaDAO reservaDAO = DaoFactory.createReservaDAO();
     private final ObservableList<Reserva> reservas = FXCollections.observableArrayList();
-    private final int usuarioLogadoId = SessaoUsuario.getUsuarioId(); // Obtém o ID do usuário logado
+    private final int usuarioLogadoId = SessaoUsuario.getUsuarioId();
 
     @FXML
     public void initialize() {
@@ -34,7 +39,6 @@ public class MinhasReservasController {
     }
 
     private void configurarColunas() {
-        // Configuração usando SimpleProperty diretamente
         colEsporte.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getEsporte()));
 
@@ -44,18 +48,10 @@ public class MinhasReservasController {
         colHorario.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getHorario()));
 
-        // Estilo para garantir visibilidade
-        String estiloColuna = "-fx-alignment: CENTER-LEFT; -fx-text-fill: black; -fx-font-size: 14px;";
-        colEsporte.setStyle(estiloColuna);
-        colData.setStyle(estiloColuna);
-        colHorario.setStyle(estiloColuna);
-
-        // Configuração da coluna de ações
         colAcoes.setCellFactory(param -> new TableCell<>() {
             private final Button btnCancelar = new Button("Cancelar");
 
             {
-                btnCancelar.setStyle("-fx-background-color: #f44336; -fx-text-fill: white;");
                 btnCancelar.setOnAction(event -> {
                     Reserva reserva = getTableView().getItems().get(getIndex());
                     cancelarReserva(reserva);
@@ -84,11 +80,6 @@ public class MinhasReservasController {
     private void carregarReservas() {
         reservas.setAll(reservaDAO.buscarPorUsuario(usuarioLogadoId));
         tableView.setItems(reservas);
-
-        // DEBUG: Verificar dados carregados
-        System.out.println("Total de reservas carregadas: " + reservas.size());
-        reservas.forEach(r -> System.out.println(
-                r.getEsporte() + " | " + r.getData() + " | " + r.getHorario()));
     }
 
     @FXML
@@ -119,10 +110,32 @@ public class MinhasReservasController {
     @FXML
     public void onNovaReservaClicked() {
         try {
-            // Implemente a abertura da tela de nova reserva conforme necessário
-            ((Stage) tableView.getScene().getWindow()).close();
-        } catch (Exception e) {
-            mostrarAlerta("Erro", "Não foi possível abrir nova reserva");
+            // Fecha a tela atual
+            Stage stage = (Stage) tableView.getScene().getWindow();
+            stage.close();
+
+            // Carrega o arquivo FXML da nova reserva
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("nova-reserva-view.fxml"));
+            Parent root = loader.load();
+
+            // Configura a nova cena
+            Scene scene = new Scene(root);
+            Stage novaReservaStage = new Stage();
+            novaReservaStage.setTitle("Nova Reserva");
+            novaReservaStage.setScene(scene);
+
+            // Define como modal (bloqueia outras janelas)
+            novaReservaStage.initModality(Modality.APPLICATION_MODAL);
+
+            // Mostra a nova janela e espera até que seja fechada
+            novaReservaStage.showAndWait();
+
+            // Atualiza a lista de reservas após fechar a janela de nova reserva
+            carregarReservas();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Erro", "Não foi possível abrir a tela de nova reserva");
         }
     }
 

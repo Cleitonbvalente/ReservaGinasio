@@ -3,12 +3,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.shape.Rectangle?>
 
 <VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.reservaginasiooficial.reservaginasiooficial.PerfilController"
-      spacing="15"
+      spacing="20"
       alignment="TOP_CENTER"
       style="-fx-background-color: #f5f5f5;"
       prefWidth="400">
@@ -20,23 +21,31 @@
     <Label text="Meu Perfil"
            style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
 
+    <StackPane fx:id="fotoContainer"
+               style="-fx-background-color: white; -fx-border-color: #ddd; -fx-border-width: 1px;"
+               prefWidth="150" prefHeight="200">
+        <ImageView fx:id="imgFotoPerfil" visible="false"/>
+    </StackPane>
+
     <GridPane hgap="10" vgap="10">
         <columnConstraints>
             <ColumnConstraints percentWidth="30"/>
             <ColumnConstraints percentWidth="70"/>
         </columnConstraints>
 
-        <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold;"/>
         <Label fx:id="lblNome" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-        <Label text="E-mail:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <Label text="E-mail:" GridPane.rowIndex="1" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold;"/>
         <Label fx:id="lblEmail" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
     </GridPane>
 
     <HBox spacing="15" alignment="CENTER">
         <Button text="Sair" onAction="#onSairClicked"
-                style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
-
-        <Button text="Fechar" onAction="#onFecharClicked"/>
+                style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-min-width: 100;"/>
+        <Button text="Fechar" onAction="#onFecharClicked"
+                style="-fx-min-width: 100;"/>
     </HBox>
 </VBox>
