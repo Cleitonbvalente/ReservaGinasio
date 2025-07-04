@@ -1,53 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/17"
+<VBox alignment="CENTER" prefWidth="400" spacing="20"
+      xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.reservaginasiooficial.reservaginasiooficial.LoginController"
-      spacing="10"
-      alignment="CENTER"
-      prefWidth="400">
+      style="-fx-background-color: linear-gradient(to bottom, #E3F2FD, #ffffff); -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 15, 0, 0, 4); -fx-border-radius: 12; -fx-background-radius: 12;">
 
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets bottom="20" left="20" right="20" top="20" />
     </padding>
 
+    <!-- Título -->
     <Label text="Área do Usuário"
-           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+           style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #0D47A1;" />
 
-    <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE">
+    <!-- Painel de abas -->
+    <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" style="-fx-font-size: 14px; -fx-tab-min-width: 120;">
         <tabs>
             <Tab text="Login">
-                <VBox spacing="10">
-                    <TextField fx:id="txtEmailLogin" promptText="E-mail"/>
-                    <PasswordField fx:id="txtSenhaLogin" promptText="Senha"/>
-                    <Button text="Entrar" onAction="#onLoginClicked"/>
+                <VBox spacing="15" style="-fx-padding: 20;">
+                    <TextField fx:id="txtEmailLogin" promptText="E-mail"
+                               style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #90CAF9; -fx-border-width: 2;" />
+                    <PasswordField fx:id="txtSenhaLogin" promptText="Senha"
+                                   style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #90CAF9; -fx-border-width: 2;" />
+                    <Button onAction="#onLoginClicked" text="Entrar"
+                            style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 8;" />
                 </VBox>
             </Tab>
 
             <Tab text="Cadastro">
-                <VBox spacing="10">
-                    <TextField fx:id="txtNomeCadastro" promptText="Nome Completo"/>
-                    <TextField fx:id="txtEmailCadastro" promptText="E-mail"/>
-                    <PasswordField fx:id="txtSenhaCadastro" promptText="Senha"/>
-                    <PasswordField fx:id="txtConfirmarSenha" promptText="Confirmar Senha"/>
+                <VBox spacing="15" style="-fx-padding: 20;">
+                    <TextField fx:id="txtNomeCadastro" promptText="Nome Completo"
+                               style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #90CAF9; -fx-border-width: 2;" />
+                    <TextField fx:id="txtEmailCadastro" promptText="E-mail"
+                               style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #90CAF9; -fx-border-width: 2;" />
+                    <PasswordField fx:id="txtSenhaCadastro" promptText="Senha"
+                                   style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #90CAF9; -fx-border-width: 2;" />
+                    <PasswordField fx:id="txtConfirmarSenha" promptText="Confirmar Senha"
+                                   style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #90CAF9; -fx-border-width: 2;" />
 
-                    <HBox spacing="10" alignment="CENTER_LEFT">
-                        <Button fx:id="btnSelecionarFoto" text="Selecionar Foto"
-                                onAction="#onSelecionarFotoClicked"/>
-                        <Label fx:id="lblNomeArquivo" style="-fx-font-style: italic;"/>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Button fx:id="btnSelecionarFoto" onAction="#onSelecionarFotoClicked" text="Selecionar Foto"
+                                style="-fx-background-color: #64B5F6; -fx-text-fill: white; -fx-background-radius: 6;"/>
+                        <Label fx:id="lblNomeArquivo" style="-fx-font-style: italic; -fx-text-fill: #555;" />
                     </HBox>
 
-                    <Button text="Cadastrar" onAction="#onCadastrarClicked"/>
+                    <Button onAction="#onCadastrarClicked" text="Cadastrar"
+                            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 8;" />
                 </VBox>
             </Tab>
         </tabs>
     </TabPane>
 
-    <Label text="© 2023 Ginásio Esportivo"
-           style="-fx-font-size: 12px; -fx-text-fill: #666;"/>
+    <Label text="Ginásio Esportivo" style="-fx-font-size: 12px; -fx-text-fill: #616161;" />
+
 </VBox>

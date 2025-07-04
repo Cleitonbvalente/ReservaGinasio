@@ -69,6 +69,13 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
     public void deletarPorId(Integer id) {
         PreparedStatement st = null;
         try {
+            // Primeiro deleta as reservas do usuário
+            st = conn.prepareStatement("DELETE FROM reservas WHERE id_usuario = ?");
+            st.setInt(1, id);
+            st.executeUpdate();
+            DB.closeStatement(st);
+
+            // Depois deleta o usuário
             st = conn.prepareStatement("DELETE FROM usuarios WHERE id = ?");
             st.setInt(1, id);
             st.executeUpdate();
@@ -78,6 +85,7 @@ public class UsuarioDAOJDBC implements UsuarioDAO {
             DB.closeStatement(st);
         }
     }
+
 
     @Override
     public Usuario buscarPorId(Integer id) {

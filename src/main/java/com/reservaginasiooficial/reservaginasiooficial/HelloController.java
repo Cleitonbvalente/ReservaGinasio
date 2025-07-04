@@ -44,7 +44,7 @@ public class HelloController {
         btnPerfil.setVisible(logado);
 
         lblMensagemLogin.setVisible(!logado);
-        lblMensagemLogin.setText("Para Fazer Reserva ou Gerenciar suas reservas,\nfaça login ou cadastre-se");
+        lblMensagemLogin.setText("Para Fazer Reserva ou Gerenciar suas reservas, faça login ou cadastre-se");
     }
 
     @FXML

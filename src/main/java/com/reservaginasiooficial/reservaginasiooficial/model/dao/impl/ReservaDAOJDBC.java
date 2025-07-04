@@ -237,4 +237,15 @@ public class ReservaDAOJDBC implements ReservaDAO {
             DB.closeResultSet(rs);
         }
     }
+    @Override
+    public void deletarPorUsuario(Integer usuarioId) throws SQLException {
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement("DELETE FROM reservas WHERE id_usuario = ?");
+            st.setInt(1, usuarioId);
+            st.executeUpdate();
+        } finally {
+            DB.closeStatement(st);
+        }
+    }
 }

@@ -1,51 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.*?>
 
 <VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.reservaginasiooficial.reservaginasiooficial.PerfilController"
       spacing="20"
-      alignment="TOP_CENTER"
-      style="-fx-background-color: #f5f5f5;"
-      prefWidth="400">
+      alignment="CENTER"
+      style="-fx-padding: 30; -fx-background-color: linear-gradient(to bottom, #ffffff, #e3f2fd); -fx-border-radius: 10;">
 
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
-
+    <!-- Título -->
     <Label text="Meu Perfil"
-           style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+           style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #0D47A1;" />
 
-    <StackPane fx:id="fotoContainer"
-               style="-fx-background-color: white; -fx-border-color: #ddd; -fx-border-width: 1px;"
-               prefWidth="150" prefHeight="200">
-        <ImageView fx:id="imgFotoPerfil" visible="false"/>
+    <!-- Foto de perfil com botão alterar -->
+    <StackPane fx:id="fotoContainer" maxWidth="150" maxHeight="150">
+        <ImageView fx:id="imgFotoPerfil" fitWidth="150" fitHeight="150" style="-fx-background-radius: 75; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 2);" />
+        <Button fx:id="btnAlterarFoto"
+                text="Alterar Foto"
+                style="-fx-background-color: rgba(0,0,0,0.6); -fx-text-fill: white; -fx-font-size: 12px;"
+                StackPane.alignment="BOTTOM_CENTER"
+                visible="false"/>
     </StackPane>
 
-    <GridPane hgap="10" vgap="10">
-        <columnConstraints>
-            <ColumnConstraints percentWidth="30"/>
-            <ColumnConstraints percentWidth="70"/>
-        </columnConstraints>
-
+    <!-- Informações do usuário -->
+    <GridPane hgap="10" vgap="15"
+              style="-fx-padding: 20; -fx-background-color: #ffffff; -fx-background-radius: 10;">
         <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0"
                style="-fx-font-weight: bold;"/>
-        <Label fx:id="lblNome" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <TextField fx:id="txtNome" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                   editable="false" style="-fx-pref-width: 250px;"/>
 
         <Label text="E-mail:" GridPane.rowIndex="1" GridPane.columnIndex="0"
                style="-fx-font-weight: bold;"/>
-        <Label fx:id="lblEmail" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <TextField fx:id="txtEmail" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                   editable="false"/>
+
+        <Label text="Nova Senha:" GridPane.rowIndex="2" GridPane.columnIndex="0"
+               visible="false" style="-fx-font-weight: bold;"/>
+        <PasswordField fx:id="txtSenha" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                       visible="false"/>
     </GridPane>
 
-    <HBox spacing="15" alignment="CENTER">
-        <Button text="Sair" onAction="#onSairClicked"
-                style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-min-width: 100;"/>
-        <Button text="Fechar" onAction="#onFecharClicked"
-                style="-fx-min-width: 100;"/>
+    <!-- Botões -->
+    <HBox spacing="12" alignment="CENTER">
+        <Button fx:id="btnEditar"
+                text="Editar Perfil"
+                style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 14px;"/>
+        <Button fx:id="btnSalvar"
+                text="Salvar"
+                visible="false"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14px;"/>
+        <Button fx:id="btnCancelar"
+                text="Cancelar"
+                visible="false"
+                style="-fx-background-color: #BDBDBD; -fx-text-fill: white; -fx-font-size: 14px;"/>
+        <Button fx:id="btnExcluirConta"
+                text="Excluir Conta"
+                style="-fx-background-color: #F44336; -fx-text-fill: white; -fx-font-size: 14px;"/>
+        <Button fx:id="btnSair"
+                text="Sair"
+                style="-fx-background-color: #757575; -fx-text-fill: white; -fx-font-size: 14px;"/>
     </HBox>
 </VBox>
+
