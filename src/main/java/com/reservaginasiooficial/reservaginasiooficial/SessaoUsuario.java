@@ -25,4 +25,3 @@ public class SessaoUsuario {
         return usuarioLogado != null ? usuarioLogado.getId() : null;
     }
 }
-

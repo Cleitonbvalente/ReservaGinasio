@@ -20,7 +20,6 @@ public class Reserva {
         this.horario = horario;
     }
 
-    // Getters e Setters
     public Integer getId() {
         return id;
     }

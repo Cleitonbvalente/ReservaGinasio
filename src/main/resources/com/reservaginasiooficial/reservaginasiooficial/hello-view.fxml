@@ -6,10 +6,8 @@
 
 <VBox alignment="CENTER" spacing="20" style="-fx-padding: 30; -fx-background-color: linear-gradient(to bottom, #2196F3, #E3F2FD);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservaginasiooficial.reservaginasiooficial.HelloController">
 
-    <!-- Cabeçalho com título -->
-    <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #0D47A1;" text="Sistema de Reservas do Ginásio" />
+    <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #010935;" text="Sistema de Reservas do Ginásio" />
 
-    <!-- Container de botões e mensagem -->
     <VBox fx:id="vbOpcoesUsuario" alignment="CENTER" spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20;">
 
         <Button fx:id="btnNovaReserva" onAction="#onNovaReservaClicked" style="-fx-font-size: 16px; -fx-min-width: 250px; -fx-min-height: 45px; -fx-background-color: #4CAF50; -fx-text-fill: white;" text="Fazer Nova Reserva" />
@@ -19,13 +17,10 @@
 
         <Button fx:id="btnAreaUsuario" onAction="#onLoginClicked" style="-fx-font-size: 16px; -fx-min-width: 250px; -fx-min-height: 45px; -fx-background-color: #9E9E9E; -fx-text-fill: white;" text="Área do Usuário" />
 
-        <!-- Frase centralizada -->
         <Label fx:id="lblMensagemLogin" alignment="CENTER" maxWidth="280" style="-fx-font-size: 14px; -fx-text-fill: #757575; -fx-alignment: center; -fx-text-alignment: center;" text="" wrapText="true" />
 
-        <!-- Botão Meu Perfil -->
         <Button fx:id="btnPerfil" onAction="#onPerfilClicked" style="-fx-font-size: 16px; -fx-min-width: 250px; -fx-min-height: 45px; -fx-background-color: #3F51B5; -fx-text-fill: white;" text="Meu Perfil" />
     </VBox>
 
-    <!-- Rodapé -->
     <Label style="-fx-font-size: 12px; -fx-text-fill: #757575;" text="Ginásio Esportivo - Desenvolvido por Cleiton Barbosa Valente" />
 </VBox>

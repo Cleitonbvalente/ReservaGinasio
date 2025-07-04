@@ -21,10 +21,8 @@ public class NovaReservaController {
 
     @FXML
     public void initialize() {
-        // Preenche o ComboBox de esportes
-        cbEsporte.getItems().addAll("Futsal", "Vôlei", "Basquete", "Handebol", "Badminton");
+        cbEsporte.getItems().addAll("Futsal", "Vôlei", "Basquete", "Handebol", "Badminton", "Outros");
 
-        // Configura o DatePicker para aceitar apenas datas futuras
         dpData.setDayCellFactory(picker -> new javafx.scene.control.DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
@@ -32,14 +30,12 @@ public class NovaReservaController {
             }
         });
 
-        // Preenche os horários disponíveis
         cbHorario.getItems().addAll(
                 "07:00-09:00", "09:00-11:00", "11:00-13:00",
                 "13:00-15:00", "15:00-17:00", "17:00-19:00",
                 "19:00-21:00", "21:00-23:00"
         );
 
-        // Atualiza horários quando a data muda
         dpData.valueProperty().addListener((obs, oldDate, newDate) -> {
             if (newDate != null) {
                 atualizarHorariosDisponiveis(newDate);

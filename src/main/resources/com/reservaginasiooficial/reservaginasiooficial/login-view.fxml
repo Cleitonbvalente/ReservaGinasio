@@ -20,11 +20,9 @@
         <Insets bottom="20" left="20" right="20" top="20" />
     </padding>
 
-    <!-- Título -->
     <Label text="Área do Usuário"
-           style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #0D47A1;" />
+           style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #010935;" />
 
-    <!-- Painel de abas -->
     <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" style="-fx-font-size: 14px; -fx-tab-min-width: 120;">
         <tabs>
             <Tab text="Login">

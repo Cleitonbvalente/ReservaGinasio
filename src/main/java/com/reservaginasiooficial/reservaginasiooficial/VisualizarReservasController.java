@@ -34,7 +34,6 @@ public class VisualizarReservasController {
     }
 
     private void configurarColunas() {
-        // Configuração usando SimpleProperty diretamente
         colResponsavel.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getNomeUsuario()));
 
@@ -47,14 +46,12 @@ public class VisualizarReservasController {
         colHorario.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getHorario()));
 
-        // Estilo para garantir visibilidade
         String estiloColuna = "-fx-alignment: CENTER-LEFT; -fx-text-fill: black; -fx-font-size: 14px;";
         colResponsavel.setStyle(estiloColuna);
         colEsporte.setStyle(estiloColuna);
         colData.setStyle(estiloColuna);
         colHorario.setStyle(estiloColuna);
 
-        // Larguras preferenciais
         colResponsavel.setPrefWidth(200);
         colEsporte.setPrefWidth(150);
         colData.setPrefWidth(120);
@@ -66,7 +63,6 @@ public class VisualizarReservasController {
         reservasFiltradas.setAll(todasReservas);
         tableView.setItems(reservasFiltradas);
 
-        // DEBUG: Verificar dados carregados
         System.out.println("Total de reservas carregadas: " + todasReservas.size());
         todasReservas.forEach(r -> System.out.println(
                 r.getNomeUsuario() + " | " + r.getEsporte() + " | " +

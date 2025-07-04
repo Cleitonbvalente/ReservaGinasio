@@ -9,17 +9,17 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.reservaginasiooficial.reservaginasiooficial.VisualizarReservasController"
       spacing="10"
-      style="-fx-background-color: #f5f5f5;"
-      prefWidth="800">
+      prefWidth="800"
+      style="-fx-background-color: linear-gradient(to bottom, #e0f7fa, #ffffff);">
 
     <padding>
         <Insets top="10" right="10" bottom="10" left="10"/>
     </padding>
 
     <Label text="Visualização de Reservas"
-           style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+           style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #010935;"
+           alignment="CENTER"/>
 
-    <!-- Barra de Filtros -->
     <GridPane hgap="10" vgap="10">
         <columnConstraints>
             <ColumnConstraints percentWidth="20"/>
@@ -38,15 +38,13 @@
         <TextField fx:id="tfEsporte" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
     </GridPane>
 
-    <!-- Botões de Ação -->
     <HBox spacing="10" alignment="CENTER">
         <Button text="Aplicar Filtros" onAction="#onFiltrarClicked"
-                style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"/>
         <Button text="Limpar Filtros" onAction="#onLimparFiltrosClicked"
-                style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
+                style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold;"/>
     </HBox>
 
-    <!-- Tabela de Reservas -->
     <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
         <columns>
             <TableColumn fx:id="colResponsavel" text="Responsável" prefWidth="200"/>
@@ -56,8 +54,8 @@
         </columns>
     </TableView>
 
-    <!-- Botão Fechar -->
     <HBox spacing="10" alignment="CENTER_RIGHT">
-        <Button text="Fechar" onAction="#onFecharClicked"/>
+        <Button text="Fechar" onAction="#onFecharClicked"
+                style="-fx-font-weight: bold;"/>
     </HBox>
 </VBox>

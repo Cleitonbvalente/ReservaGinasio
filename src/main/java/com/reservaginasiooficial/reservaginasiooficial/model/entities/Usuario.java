@@ -17,7 +17,6 @@ public class Usuario {
         this.senha = senha;
     }
 
-    // Getters e Setters
     public Integer getId() {
         return id;
     }

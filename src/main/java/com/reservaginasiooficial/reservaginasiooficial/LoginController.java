@@ -82,7 +82,6 @@ public class LoginController {
             try {
                 Usuario novoUsuario = new Usuario(nome, email, senha);
 
-                // Adiciona foto se foi selecionada
                 if (arquivoFoto != null) {
                     byte[] fotoBytes = Files.readAllBytes(arquivoFoto.toPath());
                     novoUsuario.setFoto(fotoBytes);
@@ -90,14 +89,11 @@ public class LoginController {
 
                 usuarioDAO.inserir(novoUsuario);
 
-                // Autentica automaticamente
                 Usuario usuario = usuarioDAO.autenticar(email, senha);
                 SessaoUsuario.login(usuario);
 
-                // Fecha a tela de login/cadastro
                 fecharJanela();
 
-                // Atualiza a tela principal
                 HelloController controller = HelloController.getInstancia();
                 if (controller != null) {
                     controller.atualizarInterfaceUsuario();

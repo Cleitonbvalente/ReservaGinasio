@@ -110,27 +110,21 @@ public class MinhasReservasController {
     @FXML
     public void onNovaReservaClicked() {
         try {
-            // Fecha a tela atual
             Stage stage = (Stage) tableView.getScene().getWindow();
             stage.close();
 
-            // Carrega o arquivo FXML da nova reserva
             FXMLLoader loader = new FXMLLoader(getClass().getResource("nova-reserva-view.fxml"));
             Parent root = loader.load();
 
-            // Configura a nova cena
             Scene scene = new Scene(root);
             Stage novaReservaStage = new Stage();
             novaReservaStage.setTitle("Nova Reserva");
             novaReservaStage.setScene(scene);
 
-            // Define como modal (bloqueia outras janelas)
             novaReservaStage.initModality(Modality.APPLICATION_MODAL);
 
-            // Mostra a nova janela e espera até que seja fechada
             novaReservaStage.showAndWait();
 
-            // Atualiza a lista de reservas após fechar a janela de nova reserva
             carregarReservas();
 
         } catch (IOException e) {
