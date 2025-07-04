@@ -8,37 +8,56 @@
 <VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.reservaginasiooficial.reservaginasiooficial.NovaReservaController"
-      spacing="15"
+      spacing="25"
       alignment="TOP_CENTER"
-      prefWidth="500">
+      prefWidth="500"
+      style="-fx-background-color: #f5f5f5;">
 
     <padding>
-        <Insets top="20" right="25" bottom="20" left="25"/>
+        <Insets top="30" right="35" bottom="30" left="35"/>
     </padding>
 
     <Label text="Nova Reserva"
-           style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+           style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #0D47A1;"/>
 
-    <GridPane hgap="10" vgap="10">
+    <GridPane hgap="15" vgap="15">
         <columnConstraints>
-            <ColumnConstraints percentWidth="30"/>
-            <ColumnConstraints percentWidth="70"/>
+            <ColumnConstraints percentWidth="35"/>
+            <ColumnConstraints percentWidth="65"/>
         </columnConstraints>
 
-        <Label text="Esporte:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="cbEsporte" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <Label text="Esporte:"
+               style="-fx-font-size: 14px; -fx-text-fill: #444;"
+               GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="cbEsporte"
+                  GridPane.rowIndex="0" GridPane.columnIndex="1"
+                  style="-fx-pref-width: 200px;"/>
 
-        <Label text="Data:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <DatePicker fx:id="dpData" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <Label text="Data:"
+               style="-fx-font-size: 14px; -fx-text-fill: #444;"
+               GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dpData"
+                    GridPane.rowIndex="1" GridPane.columnIndex="1"
+                    style="-fx-pref-width: 200px;"/>
 
-        <Label text="Horário:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="cbHorario" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        <Label text="Horário:"
+               style="-fx-font-size: 14px; -fx-text-fill: #444;"
+               GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="cbHorario"
+                  GridPane.rowIndex="2" GridPane.columnIndex="1"
+                  style="-fx-pref-width: 200px;"/>
     </GridPane>
 
-    <HBox spacing="15" alignment="CENTER">
+    <HBox spacing="20" alignment="CENTER">
         <Button text="Reservar" onAction="#onReservarClicked"
-                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-min-width: 100px;"/>
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white;
+                       -fx-font-weight: bold; -fx-background-radius: 8;
+                       -fx-padding: 8 20 8 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 4, 0, 0, 2);"/>
+
         <Button text="Cancelar" onAction="#onCancelarClicked"
-                style="-fx-min-width: 100px;"/>
+                style="-fx-background-color: #dddddd; -fx-text-fill: #333;
+                       -fx-font-weight: bold; -fx-background-radius: 8;
+                       -fx-padding: 8 20 8 20;"/>
     </HBox>
 </VBox>
+
